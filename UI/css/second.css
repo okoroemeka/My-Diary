@@ -12,6 +12,7 @@ html,body{
 	font-family: "Josefin Sans", sans-serif;
 }
 .row{
+	min-width: 100%;
 	width: 100%;
 	float: left;
 	display: flex;
@@ -59,7 +60,7 @@ html,body{
 	min-height: 100vh;
 	overflow: auto;
 	margin: auto;
-	background-color: rgba(204, 255, 255, 0.2);
+	/*background-color: rgba(204, 255, 255, 0.2);*/
 }
 .navbar{
 	font-size: 18px;
@@ -166,11 +167,31 @@ html,body{
 	background-color: #4CAF50;
 	transition-duration: 0.5s;
 }
-#delete-button{
+#delete-button, #add-button{
 	background-color: #0275d8;
 }
 #edit-button{
 	background-color: #003366;
+}
+.diary-entry-container{
+	background-color: #323232;
+}
+#diary-title,#diary-subject,#text-area{
+	width: 100%;
+	border-radius: 6px;
+}
+#diary-title,#diary-subject{
+	height: 40px;
+}
+#text-area{
+	height: 400px;
+	margin-top: 4%;
+}
+.text-area{
+	margin-bottom: 5px;
+}
+.add-diary-text p{
+	font-size: 1.2rem;
 }
 @media screen and (min-width: 768px) {
   /*navigation bar style*/
@@ -215,7 +236,7 @@ html,body{
   .overlay-caption{
   	font-size: 3.5rem;
   }
-  #delete-button:hover,#edit-button:hover{
+  #add-button:hover,#delete-button:hover,#edit-button:hover{
   	cursor: pointer;
   	background:#4CAF50;
   }
