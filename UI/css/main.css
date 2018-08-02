@@ -192,6 +192,8 @@ body{
 	/*font-weight: lighter;*/
 }
 .form-input input{
+	color: #ffffff;
+	background: transparent;
 	padding-left: 3px;
 }
 .form-input input,button{
@@ -262,7 +264,8 @@ body{
   	display: flex;
   	justify-content: space-between;
   	padding-bottom: 0px;
-  	background-color: rgba(0,0,0,0.7);
+  	border-bottom: 1px solid white;
+  	background-color: rgba(0,0,0,0.6);
   	height: 70px;
   	align-items: center;
   }  
