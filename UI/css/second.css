@@ -8,8 +8,8 @@ html,body{
 	margin: 0 auto;
 	/*height: 100vh;*/
 }
-.body{
-	font-family: "Josefin Sans", sans-serif;
+body{
+	font-family: Tahoma, sans-serif;
 }
 .row{
 	min-width: 100%;
@@ -155,7 +155,8 @@ html,body{
 	border-radius: 10px;
 	background-color: #333333;
 }
-.buttons button{
+.buttons button, #profile-button button,
+ #edit-profile-save-button,#edit-profile-cancel{
 	width: 100px;
 	height: 40px;
 	color: #ffffff;
@@ -193,6 +194,70 @@ html,body{
 .add-diary-text p{
 	font-size: 1.2rem;
 }
+/*profile style*/
+.profile-container{
+	justify-content: center;
+}
+.image-container{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+}
+.profile-details p span{
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+#profile-button button, 
+#edit-profile-save-button,
+#edit-profile-cancel{
+	background-color: #005ce6;
+	cursor: pointer;
+}
+.profile-picture-container{
+	width: 100%
+}
+.profile-details-container{
+	width: 100%;
+}
+.edit-profile{
+	margin-top: 5%;
+}
+#image-input{
+	width: 200px;
+	height: 30px;
+	color: #ffffff;
+	padding: 2px auto; 
+	background-color: #333333;
+	border-radius: 3px;
+}
+.profile-heading{
+	color: #333333;
+	text-align: center;
+	font-weight: bolder;
+	font-size: 2.5rem;
+	margin-top: 5%; 
+}
+/*style for edit profile*/
+.edit-profile-button-area{
+	margin-top: 5%;
+}
+.edit-first-name input, .edit-last-name input,.edit-email input{
+	width: 100%;
+	height: 40px;
+	padding-left: 5px;
+	border: 1px solid #cfcfcf;
+	border-radius: 5px;
+}
+.edit-first-name p, .edit-last-name p,.edit-email p{
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+.change-photo-text{
+	font-size: 1.3rem;
+	font-weight: bold;
+	margin-top: 3%;
+}
+
 @media screen and (min-width: 768px) {
   /*navigation bar style*/
   .navbar{
@@ -240,4 +305,22 @@ html,body{
   	cursor: pointer;
   	background:#4CAF50;
   }
+/*profile style*/
+ .profile-details-container{
+ 	margin-left: 20px;
+ }
+ #profile-button button:hover,
+ #edit-profile-save-button:hover,
+ #edit-profile-cancel:hover{
+ 	background-color: #0033cc;
+ }
+ .profile-button-main{
+ 	margin-top: 20%;
+ }
+ .profile-picture-container{
+	width: 25%;
+ }
+ .profile-details-container{
+	width: 66.66%;
+}
 }
