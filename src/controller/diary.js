@@ -25,26 +25,26 @@ class Diary {
     });
   }
 
-  // static createDiaryEntry(req, res) {
-  //   if ((req.body.title && req.body.title.trim().length > 0)
-  //   && (req.body.text && req.body.text.trim().length > 0)) {
-  //     const entry = {
-  //       id: diary.length + 1,
-  //       title: req.body.title,
-  //       text: req.body.text,
-  //     };
-  //     diary.push(entry);
-  //     return res.status(201).send({
-  //       status: 'success',
-  //       message: 'entry created successfully',
-  //       data: entry,
-  //     });
-  //   }
-  //   return res.status(404).send({
-  //     status: 'fail',
-  //     message: 'Not found',
-  //   });
-  // }
+  static createDiaryEntry(req, res) {
+    if ((req.body.title && req.body.title.trim().length > 0)
+    && (req.body.text && req.body.text.trim().length > 0)) {
+      const entry = {
+        id: diary.length + 1,
+        title: req.body.title,
+        text: req.body.text,
+      };
+      diary.push(entry);
+      return res.status(201).send({
+        status: 'success',
+        message: 'entry created successfully',
+        data: entry,
+      });
+    }
+    return res.status(404).send({
+      status: 'fail',
+      message: 'Not found',
+    });
+  }
 
   // static updateEntry(req, res) {
   //   const { entryId } = req.params;
