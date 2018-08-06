@@ -46,30 +46,30 @@ class Diary {
     });
   }
 
-  // static updateEntry(req, res) {
-  //   const { entryId } = req.params;
-  //   const diaryEntry = diary.filter(entry => (parseInt(entryId, 10) === parseInt(entry.id, 10)));
-  //   if (diaryEntry.length === 0) {
-  //     return res.status(404).send({
-  //       status: 'fail',
-  //       message: 'The entry you want to update does not exist',
-  //     });
-  //   } if ((!req.body.title && req.body.title.trim().length === 0)
-  //     && (!req.body.text && req.body.text.trim().length === 0)) {
-  //     return res.status(400).send({
-  //       status: 'fail',
-  //       message: 'The title and text fields are empty',
-  //     });
-  //   }
-  //   const updateDetails = req.body;
-  //   const entryPosition = parseInt(entryId, 10);
-  //   diary[entryPosition - 1] = updateDetails;
-  //   return res.status(200).send({
-  //     status: 'success',
-  //     message: 'Updated successully',
-  //     data: diary[entryPosition - 1],
-  //   });
-  // }
+  static updateEntry(req, res) {
+    const { entryId } = req.params;
+    const diaryEntry = diary.filter(entry => (parseInt(entryId, 10) === parseInt(entry.id, 10)));
+    if (diaryEntry.length === 0) {
+      return res.status(404).send({
+        status: 'fail',
+        message: 'The entry you want to update does not exist',
+      });
+    } if ((!req.body.title && req.body.title.trim().length === 0)
+      && (!req.body.text && req.body.text.trim().length === 0)) {
+      return res.status(400).send({
+        status: 'fail',
+        message: 'The title and text fields are empty',
+      });
+    }
+    const updateDetails = req.body;
+    const entryPosition = parseInt(entryId, 10);
+    diary[entryPosition - 1] = updateDetails;
+    return res.status(200).send({
+      status: 'success',
+      message: 'Updated successully',
+      data: diary[entryPosition - 1],
+    });
+  }
 
   // static deleteEntry(req, res) {
   //   const { entryId } = req.params;
