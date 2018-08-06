@@ -14,17 +14,16 @@ class Diary {
     });
   }
 
-  // static getSingleEntry(req, res) {
-  //   const diaryEntry = diary.find(entry => parseInt(entry.id, 10) === parseInt(req.params.entryId, 10));
-  //   if (diaryEntry) {
-  //     return res.status(200).send(diaryEntry);
-  //   }
-  //   return res.status(404).send({
-  //     status: 'fail',
-  //     message: 'Not found',
-  //     // dbId: entry.id,
-  //   });
-  // }
+  static getSingleEntry(req, res) {
+    const diaryEntry = diary.find(entry => parseInt(entry.id, 10) === parseInt(req.params.entryId, 10));
+    if (diaryEntry) {
+      return res.status(200).send(diaryEntry);
+    }
+    return res.status(404).send({
+      status: 'fail',
+      message: 'Not found',
+    });
+  }
 
   // static createDiaryEntry(req, res) {
   //   if ((req.body.title && req.body.title.trim().length > 0)
