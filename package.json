@@ -1,0 +1,44 @@
+{
+  "name": "My-Diary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "start:dev": "nodemon src/bin/www.js --exec babel-node --presets env",
+    "build": "babel src -d src/dist --presets env",
+    "serve": "node src/dist/bin/www.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okoroemeka/My-Diary.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/okoroemeka/My-Diary/issues"
+  },
+  "homepage": "https://github.com/okoroemeka/My-Diary#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "nyc": "^12.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.18.3"
+  }
+}
