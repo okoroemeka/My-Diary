@@ -71,19 +71,19 @@ class Diary {
     });
   }
 
-  // static deleteEntry(req, res) {
-  //   const { entryId } = req.params;
-  //   const diaryEntry = diary.filter(entry => parseInt(entryId, 10) === parseInt(entry.id, 10));
-  //   if (!diaryEntry.length === 0) {
-  //     return res.status(404).send({
-  //       status: 'fail',
-  //       message: 'The entry does not exist',
-  //     });
-  //   }
-  //   const id = parseInt(entryId, 10);
-  //   diary.splice(id - 1, 1);
-  //   return res.status(204).send();
-  // }
+  static deleteEntry(req, res) {
+    const { entryId } = req.params;
+    const diaryEntry = diary.filter(entry => parseInt(entryId, 10) === parseInt(entry.id, 10));
+    if (!diaryEntry.length === 0) {
+      return res.status(404).send({
+        status: 'fail',
+        message: 'The entry does not exist',
+      });
+    }
+    const id = parseInt(entryId, 10);
+    diary.splice(id - 1, 1);
+    return res.status(204).send();
+  }
 }
 
 export default Diary;
