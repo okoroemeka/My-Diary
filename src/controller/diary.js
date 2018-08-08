@@ -17,7 +17,10 @@ class Diary {
   static getSingleEntry(req, res) {
     const diaryEntry = diary.find(entry => parseInt(entry.id, 10) === parseInt(req.params.entryId, 10));
     if (diaryEntry) {
-      return res.status(200).send(diaryEntry);
+      return res.status(200).send({
+        status: 'success',
+        data: diaryEntry,
+      });
     }
     return res.status(404).send({
       status: 'fail',
@@ -40,9 +43,9 @@ class Diary {
         data: entry,
       });
     }
-    return res.status(404).send({
+    return res.status(400).send({
       status: 'fail',
-      message: 'Not found',
+      message: 'bad request',
     });
   }
 
@@ -73,8 +76,8 @@ class Diary {
 
   static deleteEntry(req, res) {
     const { entryId } = req.params;
-    const diaryEntry = diary.filter(entry => parseInt(entryId, 10) === parseInt(entry.id, 10));
-    if (!diaryEntry.length === 0) {
+    const diaryEntry = diary.find(entry => parseInt(entryId, 10) === parseInt(entry.id, 10));
+    if (!diaryEntry) {
       return res.status(404).send({
         status: 'fail',
         message: 'The entry does not exist',
@@ -82,7 +85,10 @@ class Diary {
     }
     const id = parseInt(entryId, 10);
     diary.splice(id - 1, 1);
-    return res.status(204).send();
+    return res.status(200).send({
+      status: 'success',
+      message: 'entry deleted successfully',
+    });
   }
 }
 
