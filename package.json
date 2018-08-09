@@ -8,8 +8,8 @@
     "start:dev": "nodemon src/bin/www.js --exec babel-node --presets env",
     "build": "babel src -d src/dist --presets env",
     "serve": "node src/dist/bin/www.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "test": "mocha --compilers js:babel-register src/test --exit --timeout 20000"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/okoroemeka/My-Diary.git"
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
