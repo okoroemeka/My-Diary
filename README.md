@@ -1,1 +1,2 @@
 # My-Diary
+[![Build Status](https://travis-ci.org/okoroemeka/My-Diary.svg?branch=develop)](https://travis-ci.org/okoroemeka/My-Diary)  [![Coverage Status](https://coveralls.io/repos/github/okoroemeka/My-Diary/badge.svg?branch=ch%2Fadd-coveralls)](https://coveralls.io/github/okoroemeka/My-Diary?branch=ch%2Fadd-coveralls)
