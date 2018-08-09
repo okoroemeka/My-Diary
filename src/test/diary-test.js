@@ -119,14 +119,33 @@ describe('PUT /api/v1/entries/1', () => {
   });
 });
 describe('DELETE /api/v1/entries/:entryId', () => {
+  it('should return 200 for deleted diary enry', (done) => {
+    chai.request(server)
+      .delete('/api/v1/entries/2')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.an('object');
+        expect(res.body.status).be.a('string');
+        expect(res.body.status).be.a('string');
+        assert.isString(res.body.status);
+        assert.isString(res.body.message);
+        assert.equal(res.body.status, 'success');
+        assert.equal(res.body.message, 'entry deleted successfully');
+        done();
+      });
+  });
   it('should return 404 for non existing diary entries', (done) => {
     chai.request(server)
-      .delete('/api/v1/entries/3')
+      .delete('/api/v1/entries/5')
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.be.an('object');
         expect(res.body.status).be.a('string');
         expect(res.body.message).be.a('string');
+        assert.isString(res.body.status);
+        assert.isString(res.body.message);
+        assert.equal(res.body.status, 'fail');
+        assert.equal(res.body.message, 'The entry does not exist');
         done();
       });
   });
