@@ -1,0 +1,7 @@
+languege: node_js
+node_js:
+  - "stable"
+services:
+  - postgresql
+script:
+  - npm run test
