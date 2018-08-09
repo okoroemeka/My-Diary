@@ -2,6 +2,8 @@ languege: node_js
 
 node_js:
   - "stable"
+install:
+  - npm install
 
 cache: bundler
 
@@ -11,6 +13,6 @@ dist: trusty
 
 services:
   - postgresql
-  
+
 script:
   - npm run test
