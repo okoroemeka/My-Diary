@@ -16,3 +16,5 @@ services:
 
 script:
   - npm run test
+after_success:
+  - npm run coverage
