@@ -1,94 +1,189 @@
-import diary from '../seed/entry';
+// import diary from '../seed/entry';
+import dbConnection from '../model/config';
 
 class Diary {
+  /**
+   * @return {array} getAllDiaryEntries
+   * @param {*} req
+   * @param {*} res
+   */
   static getAllDiaryEntries(req, res) {
-    if (diary.length === 0) {
-      return res.status(404).send({
+    const query = {
+      text: 'SELECT * FROM entry WHERE user_id = $1',
+      values: [req.decoded.user_id],
+    };
+    dbConnection.query(query)
+      .then((entries) => {
+        if (entries.rowCount === 0) {
+          return res.status(404).send({
+            status: 'fail',
+            message: 'No diary entry found',
+          });
+        }
+        return res.status(200).send({
+          status: 'success',
+          data: entries.rows,
+        });
+      })
+      .catch(error => res.status(500).send({
         status: 'fail',
-        message: 'no dairy entries found',
-      });
-    }
-    return res.status(200).send({
-      status: 'success',
-      data: diary,
-    });
+        message: 'internal server error',
+      }));
   }
 
+  /**
+   * @return {object} getSingleEntry
+   * @param {*} req
+   * @param {*} res
+   */
   static getSingleEntry(req, res) {
-    const diaryEntry = diary.find(entry => parseInt(entry.id, 10) === parseInt(req.params.entryId, 10));
-    if (diaryEntry) {
-      return res.status(200).send({
-        status: 'success',
-        data: diaryEntry,
-      });
-    }
-    return res.status(404).send({
-      status: 'fail',
-      message: 'Not found',
-    });
+    const entryId = parseInt(req.params.entryId, 10);
+    const query = {
+      text: 'SELECT * FROM entry WHERE id = $1',
+      values: [entryId],
+    };
+    dbConnection.query(query)
+      .then((entry) => {
+        if (entry.rows[0].user_id !== req.decoded.user_id) {
+          return res.status(403).send({
+            status: 'fail',
+            message: 'You do not have permission to view this entry',
+          });
+        }
+        return res.status(200).send({
+          status: 'success',
+          data: {
+            id: entry.rows[0].id,
+            title: entry.rows[0].title,
+            body: entry.rows[0].body,
+          },
+        });
+      })
+      .catch(err => res.status(500).send({
+        status: 'error',
+        message: 'Internal server error, please try again',
+      }));
   }
 
+  /**
+   * @return {object}createDiaryEntry
+   * @param {*} req
+   * @param {*} res
+   */
   static createDiaryEntry(req, res) {
-    if ((req.body.title && req.body.title.trim().length > 0)
-    && (req.body.text && req.body.text.trim().length > 0)) {
-      const entry = {
-        id: diary.length + 1,
-        title: req.body.title,
-        text: req.body.text,
-      };
-      diary.push(entry);
-      return res.status(201).send({
-        status: 'success',
-        message: 'entry created successfully',
-        data: entry,
-      });
+    const { title, text } = req.body;
+    const query = {
+      text: 'INSERT INTO entry(title,body,user_id) VALUES($1, $2, $3) RETURNING *',
+      values: [title.trim(), text.trim(), req.decoded.user_id],
+    };
+    if ((title && title.trim().length > 0)
+     && (text && text.trim().length > 0)) {
+      return dbConnection.query(query)
+        .then(entry => res.status(201).send({
+          status: 'success',
+          data: {
+            id: entry.rows[0].id,
+            title: entry.rows[0].title,
+            body: entry.rows[0].body,
+          },
+        }))
+        .catch(err => res.status(500).send(err));
     }
     return res.status(400).send({
       status: 'fail',
-      message: 'bad request',
+      message: 'Some fields are empty',
     });
   }
 
+  /**
+   * @return {object} updateEntry
+   * @param {*} req
+   * @param {*} res
+   */
   static updateEntry(req, res) {
-    const { entryId } = req.params;
-    const diaryEntry = diary.filter(entry => (parseInt(entryId, 10) === parseInt(entry.id, 10)));
-    if (diaryEntry.length === 0) {
-      return res.status(404).send({
-        status: 'fail',
-        message: 'The entry you want to update does not exist',
-      });
-    } if ((!req.body.title && req.body.title.trim().length === 0)
-      && (!req.body.text && req.body.text.trim().length === 0)) {
-      return res.status(400).send({
-        status: 'fail',
-        message: 'The title and text fields are empty',
-      });
-    }
-    const updateDetails = req.body;
-    const entryPosition = parseInt(entryId, 10);
-    diary[entryPosition - 1] = updateDetails;
-    return res.status(200).send({
-      status: 'success',
-      message: 'Updated successully',
-      data: diary[entryPosition - 1],
-    });
+    const entryId = parseInt(req.params.entryId, 10);
+    const { title, text } = req.body;
+    const updateQuery = {
+      text: 'UPDATE entry SET title=$1,body=$2 WHERE id=$3 RETURNING *',
+      values: [title, text, entryId],
+    };
+    const checkEntryQuery = {
+      text: 'SELECT * FROM entry WHERE id = $1',
+      values: [entryId],
+    };
+    dbConnection.query(checkEntryQuery)
+      .then((entry) => {
+        if (entry.rowCount === 0) {
+          return res.status(404).send({
+            status: 'fail',
+            message: 'entry not found',
+          });
+        }
+        if (entry.rows[0].user_id !== req.decoded.user_id) {
+          return res.status(403).send({
+            status: 'fail',
+            message: 'you do not have permission to update this',
+          });
+        }
+        dbConnection.query(updateQuery)
+          .then(updatedEntry => res.status(200).send({
+            status: 'success',
+            message: 'entry updated successfull',
+            data: {
+              id: updatedEntry.rows[0].id,
+              title: updatedEntry.rows[0].title,
+              body: updatedEntry.rows[0].body,
+            },
+          }))
+          .catch(err => res.status(500).send(err));
+      })
+      .catch(err => res.status(500).send(err));
   }
 
+  /**
+   * @returns{object} deleteEntry
+   * @param {*} req
+   * @param {*} res
+   */
   static deleteEntry(req, res) {
-    const { entryId } = req.params;
-    const diaryEntry = diary.find(entry => parseInt(entryId, 10) === parseInt(entry.id, 10));
-    if (!diaryEntry) {
-      return res.status(404).send({
-        status: 'fail',
-        message: 'The entry does not exist',
-      });
-    }
-    const id = parseInt(entryId, 10);
-    diary.splice(id - 1, 1);
-    return res.status(200).send({
-      status: 'success',
-      message: 'entry deleted successfully',
-    });
+    const entryId = parseInt(req.params.entryId, 10);
+    const deleteEntryQuery = {
+      text: 'DELETE FROM entry WHERE id=$1',
+      values: [entryId],
+    };
+    const checkEntryQuery = {
+      text: 'SELECT * FROM entry WHERE id = $1',
+      values: [entryId],
+    };
+
+    dbConnection.query(checkEntryQuery)
+      .then((entry) => {
+        if (entry.rowCount === 0) {
+          return res.status(404).send({
+            status: 'fail',
+            message: 'entry not found',
+          });
+        }
+        if (entry.rows[0].user_id !== req.decoded.user_id) {
+          return res.status(403).send({
+            status: 'fail',
+            message: 'You do not have permission to delete this entry',
+          });
+        }
+        return dbConnection.query(deleteEntryQuery)
+          .then(() => res.status(200).send({
+            status: 'success',
+            message: 'Entry deleted successfully',
+          }))
+          .catch(err => res.status(500).send({
+            status: 'error',
+            message: 'internal server error, please try again later',
+          }));
+      })
+      .catch(err => res.status(500).send({
+        status: 'error',
+        message: 'internal server error, please try again later',
+      }));
   }
 }
 
