@@ -33,7 +33,7 @@ A template for My-Diary with the features below.
 |POST   |/auth/signup                       |create user           |Sign up to the app            |
 |POST   |/auth/signIn                       |log in user           |Log in to the app             |
 |PUT    |/entries/:entryId                  |update an entry       |modify a particular entry     |
-|DELETE |:entries/:entryId                  |delete an entry       |Remove an entry               |
+|DELETE |/entries/:entryId                  |delete an entry       |Remove an entry               |
 
 ## Setting up Locally
 
