@@ -214,7 +214,8 @@ body{
 .password-input{
 	margin-bottom: 20px;
 }
-#logIn-page-button{
+#logIn-page-button,
+#signup-page-button{
 	height: 40px;
 	color: white;
 	font-size: 1.2rem;
@@ -315,6 +316,7 @@ body{
 	padding: 0 10px;
 	margin-top: 8%;
   }
+  #signup-page-button:hover,
   #logIn-page-button:hover{
   	cursor: pointer;
   	background-color: #ffa500;
